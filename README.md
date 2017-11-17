@@ -1,3 +1,7 @@
 # Customer-Churn-Telecom-Domain-
-Churn rate has a strong impact on the life time value of the customer because it affects the length of service and the future revenue of the company.
-Telecom companies spend hundreds of dollars to acquire a new customer and when that customer leaves, the company not only loses the future revenue from that customer but also the resources spend to acquire that customer. Customers churn in telecom domain using R. Classification based problem so I used caret with repeated cross-validation. Manually evaluating confusion matrix threshold is difficult so here let computer iteratively evaluate every possible threshold and then calculate True Positive and False positive. 
+Churn rate has strong impact on the life time value of customer because it affects the revenue of
+the company.Caret package with repeated Cross validation has been used as this is a
+classification based problem. Different features have been omitted or imputed, because it affects
+the accuracy of model. Generalized linear model is used to classify the categories of churning.
+For calculating, performance Receiver Operating Characteristics (ROC) is used which diagnose
+test evaluation
