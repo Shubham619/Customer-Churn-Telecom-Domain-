@@ -165,8 +165,8 @@ myControl <- trainControl(
   number = 10,
   repeats = 5,
   summaryFunction = twoClassSummary,
-  classProbs = TRUE,
-  verboseIter = TRUE
+  classProbs = TRUE
+ 
 )
 
 ```
@@ -195,6 +195,52 @@ pred.glmModel <- as.vector(predict(model, newdata=testData,
 colAUC(pred.glmModel,testData$Churn,plotROC = TRUE)
 
 ```
+
+
+```{r message=FALSE}
+
+###Model2
+model2 <- train(Churn ~., data=telecomDataframe,method="glmnet",metric="ROC",
+                tuneGrid=expand.grid(alpha=0:1,lambda=seq(0.10/10)),trControl=myControl)
+
+```
+```{r}
+pred.glmnetModel <- as.vector(predict(model2, newdata=testData, 
+                                   type="prob")[,"Yes"])
+
+```
+```{r}
+colAUC(pred.glmnetModel,testData$Churn,plotROC=TRUE)
+
+```
+```{r}
+#Models comparision
+models <- list(glm=model,glmnet=model2)
+models <- resamples(models)
+
+models
+```
+
+```{r}
+##BWplot
+bwplot(models,metric = "ROC")
+```
+
+```{r}
+##dotplot
+dotplot(models,metric = "ROC")
+```
+
+```{r}
+##density plot
+densityplot(models,metric = "ROC")
+```
+
+```{r}
+#scatter plot
+xyplot(models,metric = "ROC")
+```
+
 
 
 ```{r}
