@@ -142,6 +142,39 @@ pred.glmModel <- as.vector(predict(model, newdata=testData,
 #ROC Curve
 colAUC(pred.glmModel,testData$Churn,plotROC = TRUE)
 
+###Model2
+model2 <- train(Churn ~., data=telecomDataframe,method="glmnet",metric="ROC",
+                tuneGrid=expand.grid(alpha=0:1,lambda=seq(0.10/10)),trControl=myControl)
+
+
+pred.glmnetModel <- as.vector(predict(model2, newdata=testData, 
+                                   type="prob")[,"Yes"])
+
+
+colAUC(pred.glmnetModel,testData$Churn,plotROC=TRUE)
+
+
+models <- list(glm=model,glmnet=model2)
+models <- resamples(models)
+
+models
+
+##BWplot
+bwplot(models,metric = "ROC")
+
+##dotplot
+dotplot(models,metric = "ROC")
+##density plot
+densityplot(models,metric = "ROC")
+#scatter plot
+xyplot(models,metric = "ROC")
+  
+  
+  
+  
+  
+  
+  
 #Result
 f.results <- ifelse(pred.glmModel > 0.5,1,0)
 
